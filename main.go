@@ -17,7 +17,7 @@ func port() string {
 	if p == "" {
 		return ":3333"
 	}
-	return p
+	return ":" + p
 }
 
 func HandleError(w http.ResponseWriter, r *http.Request) {

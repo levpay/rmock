@@ -1,6 +1,8 @@
 package main
 
 import (
+	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 )
@@ -25,6 +27,11 @@ func HandleError(w http.ResponseWriter, r *http.Request) {
 }
 
 func HandleOK(w http.ResponseWriter, r *http.Request) {
+	bodyBytes, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println(string(bodyBytes))
 	w.WriteHeader(http.StatusOK)
 }
 

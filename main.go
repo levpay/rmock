@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
+	"net"
 	"net/http"
 	"os"
 )
@@ -31,6 +33,12 @@ func HandleOK(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	ip, _, err := net.SplitHostPort(r.RemoteAddr)
+	if err != nil {
+		fmt.Fprintf(w, "userip: %q is not IP:port", r.RemoteAddr)
+	}
+	userIP := net.ParseIP(ip)
+	log.Printf("%+v\n", userIP)
 	log.Println(string(bodyBytes))
 	w.WriteHeader(http.StatusOK)
 }
